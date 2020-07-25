@@ -1915,6 +1915,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     "itemTitle": String,
@@ -1961,6 +1963,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -1969,12 +1975,23 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       bookables: null,
-      loading: false
+      loading: false,
+      columns: 3
     };
   },
-  // beforeCreate(){
-  //     console.log('before create');
-  // },
+  computed: {
+    rows: function rows() {
+      return this.bookables === null ? 0 : Math.ceil(this.bookables.length / this.columns);
+    }
+  },
+  methods: {
+    bookablesInRow: function bookablesInRow(row) {
+      return this.bookables.slice((row - 1) * this.columns, row * this.columns);
+    },
+    placeholdersInRow: function placeholdersInRow(row) {
+      return this.columns - this.bookablesInRow(row).length;
+    }
+  },
   created: function created() {
     var _this = this;
 
@@ -1988,6 +2005,26 @@ __webpack_require__.r(__webpack_exports__);
         id: 2,
         title: "Cheap Villa 2",
         content: "A very cheap villa 2"
+      }, {
+        id: 3,
+        title: "Cheap Villa 3",
+        content: "A very cheap villa 3"
+      }, {
+        id: 4,
+        title: "Cheap Villa 4",
+        content: "A very cheap villa 4"
+      }, {
+        id: 5,
+        title: "Cheap Villa 5",
+        content: "A very cheap villa 5"
+      }, {
+        id: 6,
+        title: "Cheap Villa 6",
+        content: "A very cheap villa 6"
+      }, {
+        id: 7,
+        title: "Cheap Villa 7",
+        content: "A very cheap villa 7"
       }];
       _this.loading = false;
     }, 4000); // setTimeout(() => {
@@ -37691,10 +37728,12 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("h1", [_vm._v(_vm._s(_vm.itemTitle))]),
-    _vm._v(" "),
-    _c("p", [_vm._v(_vm._s(_vm.itemContent))])
+  return _c("div", { staticClass: "card" }, [
+    _c("div", { staticClass: "card-body" }, [
+      _c("h5", { staticClass: "card-title" }, [_vm._v(_vm._s(_vm.itemTitle))]),
+      _vm._v(" "),
+      _c("p", { staticClass: "card-text" }, [_vm._v(_vm._s(_vm.itemContent))])
+    ])
   ])
 }
 var staticRenderFns = []
@@ -37724,17 +37763,39 @@ var render = function() {
       ? _c("div", [_c("p", [_vm._v("Data is loading")])])
       : _c(
           "div",
-          _vm._l(_vm.bookables, function(bookable) {
-            return _c("bookable-list-item", {
-              key: bookable.id,
-              attrs: {
-                "item-title": bookable.title,
-                "item-content": bookable.content,
-                price: 1000
-              }
-            })
+          _vm._l(_vm.rows, function(row) {
+            return _c(
+              "div",
+              { key: "row" + row, staticClass: "row mb-4" },
+              [
+                _vm._l(_vm.bookablesInRow(row), function(bookable, columns) {
+                  return _c(
+                    "div",
+                    { key: "row" + row + columns, staticClass: "col" },
+                    [
+                      _c("bookable-list-item", {
+                        attrs: {
+                          "item-title": bookable.title,
+                          "item-content": bookable.content,
+                          price: 1000
+                        }
+                      })
+                    ],
+                    1
+                  )
+                }),
+                _vm._v(" "),
+                _vm._l(_vm.placeholdersInRow(row), function(p) {
+                  return _c("div", {
+                    key: "placeholder" + row + p,
+                    staticClass: "col"
+                  })
+                })
+              ],
+              2
+            )
           }),
-          1
+          0
         )
   ])
 }
