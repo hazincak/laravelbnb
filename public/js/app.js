@@ -1941,11 +1941,74 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     BookableListItem: _BookableListItem__WEBPACK_IMPORTED_MODULE_0__["default"]
-  }
+  },
+  data: function data() {
+    return {
+      bookables: null,
+      loading: false
+    };
+  },
+  // beforeCreate(){
+  //     console.log('before create');
+  // },
+  created: function created() {
+    var _this = this;
+
+    this.loading = true;
+    setTimeout(function () {
+      _this.bookables = [{
+        id: 1,
+        title: "Cheap Villa !!!",
+        content: "A very cheap villa"
+      }, {
+        id: 2,
+        title: "Cheap Villa 2",
+        content: "A very cheap villa 2"
+      }];
+      _this.loading = false;
+    }, 4000); // setTimeout(() => {
+    //     this.bookable1.title = "Expensive villa"
+    //     this.bookable1.body = "Very Expensive villa"
+    //     this.bookable2.title = "Second expensive villa"
+    //     this.bookable2.body = "Very Expensive villa numero duo"
+    //     this.bookable3.title = "Third Expensive villa"
+    //     this.bookable3.body = "Very Expensive villa dos"
+    // }, 5000);
+  },
+  // beforeMount(){
+  //     console.log('before mount');
+  // },
+  mounted: function mounted() {} // beforeDestroy(){
+  //     console.log('before destroy');
+  // },
+  // destroyed(){
+  //     console.log('destroyed');
+  // },
+
 });
 
 /***/ }),
@@ -37656,19 +37719,24 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("bookable-list-item", {
-        attrs: {
-          "item-title": "Cheap Villa",
-          "item-content": "A very cheap villa",
-          price: 1500
-        }
-      })
-    ],
-    1
-  )
+  return _c("div", [
+    _vm.loading
+      ? _c("div", [_c("p", [_vm._v("Data is loading")])])
+      : _c(
+          "div",
+          _vm._l(_vm.bookables, function(bookable) {
+            return _c("bookable-list-item", {
+              key: bookable.id,
+              attrs: {
+                "item-title": bookable.title,
+                "item-content": bookable.content,
+                price: 1000
+              }
+            })
+          }),
+          1
+        )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
