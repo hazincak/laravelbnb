@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Booking extends Model
 {
-    public function Bookable(){
+    protected $fillable = ['from', 'to'];
+
+    public function bookable(){
         return $this->belongsTo('App\Bookable');
     }
 }
