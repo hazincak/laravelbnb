@@ -7,9 +7,7 @@
             <div class="row mb-4" v-for="row in rows" :key="'row' + row">
                 <div class="col d-flex align-items-stretch" v-for="(bookable, columns) in bookablesInRow(row)" :key="'row' + row + columns" >
                     <bookable-list-item 
-                        :item-title="bookable.title" 
-                        :item-description="bookable.description" 
-                        :price="1000"
+                      v-bind="bookable"
                     ></bookable-list-item>
                 </div>
                 <div class="col" v-for="p in placeholdersInRow(row)" :key="'placeholder' + row + p"></div>
@@ -60,13 +58,13 @@ export default {
     created(){
         this.loading = true;
 
-        const p = new Promise((resolve, reject) => {
-            console.log(resolve);
-            console.log(reject);
-            setTimeout(() => 
-                resolve('Hello')
-            , 3000);
-        });
+        // const p = new Promise((resolve, reject) => {
+        //     console.log(resolve);
+        //     console.log(reject);
+        //     setTimeout(() => 
+        //         resolve('Hello')
+        //     , 3000);
+        // });
 
         const request = axios.get("/api/bookables")
         .then(response => {

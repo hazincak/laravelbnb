@@ -1914,17 +1914,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      bookable: null
+      bookable: null,
+      loading: false
     };
   },
   created: function created() {
     var _this = this;
 
+    this.loading = true;
     axios.get("/api/bookables/".concat(this.$route.params.id)).then(function (response) {
-      return _this.bookable = response.data;
+      _this.bookable = response.data;
+      _this.loading = false;
     });
   }
 });
@@ -1949,11 +1963,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    "itemTitle": String,
-    "itemDescription": String,
-    "price": Number
+    "title": String,
+    "description": String,
+    "id": Number
   }
 });
 
@@ -1969,8 +1985,6 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _BookableListItem__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BookableListItem */ "./resources/js/bookables/BookableListItem.vue");
-//
-//
 //
 //
 //
@@ -2027,14 +2041,14 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    this.loading = true;
-    var p = new Promise(function (resolve, reject) {
-      console.log(resolve);
-      console.log(reject);
-      setTimeout(function () {
-        return resolve('Hello');
-      }, 3000);
-    });
+    this.loading = true; // const p = new Promise((resolve, reject) => {
+    //     console.log(resolve);
+    //     console.log(reject);
+    //     setTimeout(() => 
+    //         resolve('Hello')
+    //     , 3000);
+    // });
+
     var request = axios.get("/api/bookables").then(function (response) {
       _this.bookables = response.data;
       _this.loading = false;
@@ -37706,7 +37720,25 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n    xxx\n")])
+  return _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "col-md-8" }, [
+      _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card-body" }, [
+          !_vm.loading
+            ? _c("div", [
+                _c("h2", [_vm._v(_vm._s(_vm.bookable.title))]),
+                _vm._v(" "),
+                _c("hr"),
+                _vm._v(" "),
+                _c("article", [_vm._v(_vm._s(_vm.bookable.description))])
+              ])
+            : _vm._e()
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-md-4" }, [_vm._v("availability & prices")])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -37731,13 +37763,20 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "card w-100" }, [
-    _c("div", { staticClass: "card-body" }, [
-      _c("h5", { staticClass: "card-title" }, [_vm._v(_vm._s(_vm.itemTitle))]),
-      _vm._v(" "),
-      _c("p", { staticClass: "card-text" }, [
-        _vm._v(_vm._s(_vm.itemDescription))
-      ])
-    ])
+    _c(
+      "div",
+      { staticClass: "card-body" },
+      [
+        _c(
+          "router-link",
+          { attrs: { to: { name: "bookable", params: { id: _vm.id } } } },
+          [_c("h5", { staticClass: "card-title" }, [_vm._v(_vm._s(_vm.title))])]
+        ),
+        _vm._v(" "),
+        _c("p", { staticClass: "card-text" }, [_vm._v(_vm._s(_vm.description))])
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = []
@@ -37780,13 +37819,10 @@ var render = function() {
                       staticClass: "col d-flex align-items-stretch"
                     },
                     [
-                      _c("bookable-list-item", {
-                        attrs: {
-                          "item-title": bookable.title,
-                          "item-description": bookable.description,
-                          price: 1000
-                        }
-                      })
+                      _c(
+                        "bookable-list-item",
+                        _vm._b({}, "bookable-list-item", bookable, false)
+                      )
                     ],
                     1
                   )
