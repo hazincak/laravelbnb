@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Booking extends Model
 {
@@ -10,5 +11,11 @@ class Booking extends Model
 
     public function bookable(){
         return $this->belongsTo('App\Bookable');
+    }
+
+    //local query scope
+    public function scopeBetweenDates(Builder $query, $from, $to)
+    {
+        return $query->where('to', '>=', $from)->where('from', '<=', $to);
     }
 }
