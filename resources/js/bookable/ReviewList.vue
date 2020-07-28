@@ -9,7 +9,7 @@
                     <div class="col-md-6 d-flex justify-content-end">{{review.rating}}</div>
                 </div>
                 <div class="row pt-3">
-                    <div class="col-md-12">{{review.created_at}}</div>
+                    <div class="col-md-12">{{ review.created_at | fromNow}}</div>
                 </div>
                 <div class="row pt-3">
                     <div class="col-md-12">{{review.content}}</div>
@@ -19,6 +19,9 @@
     </div>
 </template>
 <script>
+// Locally defined filter
+// import moment from "moment";
+
 export default {
     props:{
         bookableId: String,
@@ -36,6 +39,12 @@ export default {
         axios.get(`/api/bookables/${this.bookableId}/reviews`)
             .then(response => this.reviews = response.data.data)
             .then(() => this.loading = false);
-    }
+    },
+    // Locally defined filter
+    // filters:{
+    //     fromNow(value){
+    //         return moment(value).fromNow();
+    //     }
+    // }
 }
 </script>
