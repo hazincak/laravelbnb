@@ -10,10 +10,10 @@
                     </div>
                 </div>
             </div>
-            <review-list></review-list>
+            <review-list :bookable-id='this.$route.params.id'></review-list>
         </div>
         <div class="col-md-4 pb-4">
-            <availability></availability>
+            <availability :bookable-id='this.$route.params.id'></availability>
 
         </div>
     </div>
@@ -23,6 +23,10 @@
 import Availability from "./Availability";
 import ReviewList from "./ReviewList";
 export default {
+
+    // props:{
+    //     bookableId: String,
+    // },
     components:{
         Availability,
         ReviewList
@@ -37,6 +41,8 @@ export default {
 
     created(){
         this.loading = true;
+        //If you relly on this.$route.params.id, your components are not reusable. Declare props 
+        //bookableId instead and  use it. 
         axios.get(`/api/bookables/${this.$route.params.id}`)
         .then(response => {
             this.bookable = response.data.data

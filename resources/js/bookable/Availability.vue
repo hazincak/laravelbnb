@@ -40,6 +40,10 @@
 
 <script>
 export default {
+    props:{
+        bookableId: String,
+    },
+
     data(){
         return{
             from: null,
@@ -54,7 +58,9 @@ export default {
             this.loading = true;
             this.errors = null;
             
-            axios.get(`/api/bookables/${this.$route.params.id}/availability?from=${this.from}&to=${this.to}`
+            //If you relly on this.$route.params.id, your components are not reusable. Declare props 
+            //bookableId instead and  use it. 
+            axios.get(`/api/bookables/${this.bookableId}/availability?from=${this.from}&to=${this.to}`
             ).then(response => {
                 this.status = response.status;
             }).catch(error => {
