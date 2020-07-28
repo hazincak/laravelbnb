@@ -5,6 +5,8 @@ import VueRouter from "vue-router";
 import Index from "./Index";
 import moment from "moment";
 
+import StarRating from "./shared/components/StarRating";
+
 window.Vue = require('vue');
 
 Vue.use(VueRouter);
@@ -12,7 +14,11 @@ Vue.use(VueRouter);
 //Registering filter globally
 Vue.filter("fromNow", value => moment(value).fromNow());
 
+
 //GLOBAL REGISTRATION
+
+Vue.component("star-rating", StarRating);
+
 // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
 // Vue.component('example2-component', require('./components/Example.2.vue').default);
