@@ -12,7 +12,7 @@ class Bookable extends Model
         return $this->hasMany('App\Booking');
     }
 
-    public function review()
+    public function reviews()
     {
         return $this->hasMany(Review::class);
     }
