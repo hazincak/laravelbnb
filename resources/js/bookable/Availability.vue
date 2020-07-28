@@ -1,6 +1,10 @@
 <template>
     <div>
-        <h6 class="text-uppercase text-secondary font-weight-bolder">Check availability</h6>
+        <h6 class="text-uppercase text-secondary font-weight-bolder">
+            Check availability
+            <span v-if="noAvailability" class="text-danger">(NOT AVAILABLE)</span>
+            <span v-if="hasAvailability" class="text-success">(AVAILABLE)</span>
+        </h6>
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="from">From</label>
@@ -50,7 +54,7 @@ export default {
             this.loading = true;
             this.errors = null;
             
-            axios.get(`/api/bookables/${this.$route.params.id}/availibility?from=${this.from}$to=${this.to}`
+            axios.get(`/api/bookables/${this.$route.params.id}/availability?from=${this.from}&to=${this.to}`
             ).then(response => {
                 this.status = response.status;
             }).catch(error => {
@@ -68,11 +72,11 @@ export default {
         hasErrors(){
             return 422 == this.status && this.errors != null;
         },
-        hasAvailibility(){
+        hasAvailability(){
             return 200 == this.status;
         },
-        noAvailibility(){
-            return 400 == this.status;
+        noAvailability(){
+            return 404 == this.status;
         }
     }
 };
