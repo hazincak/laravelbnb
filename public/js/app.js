@@ -2031,7 +2031,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 // Locally defined filter
 // import moment from "moment";
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2282,15 +2281,28 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     halfStar: function halfStar() {
-      return true;
+      var fraction = Math.round((this.rating - Math.floor(this.rating)) * 100);
+      return fraction > 0 && fraction < 50;
     },
     fullStars: function fullStars() {
-      return 3;
+      // > 4.5 = 5 stars
+      // 4.3 = 4 and half
+      return Math.round(this.rating);
     },
     emptyStars: function emptyStars() {
-      return 1;
+      // if rating would be 1.9, ceil(1.9)
+      return 5 - Math.ceil(this.rating);
     }
-  }
+  } // created(){
+  //     const numbers = [0.9, 4.0, 4.4, 4.5, 4.6, 4.9];
+  //     numbers.forEach(n => {
+  //         console.log(`round for ${n} is ${Math.round(n)}`);
+  //         console.log(`floor for ${n} is ${Math.floor(n)}`);
+  //         console.log(`ceil for ${n} is ${Math.ceil(n)}`);
+  //         console.log('================================');
+  //     });
+  // },
+
 });
 
 /***/ }),
@@ -59953,12 +59965,10 @@ var render = function() {
                     "div",
                     { staticClass: "col-md-6 d-flex justify-content-end" },
                     [
-                      _vm._v(
-                        "\n                    " +
-                          _vm._s(review.rating) +
-                          "\n                    "
-                      ),
-                      _c("star-rating")
+                      _c("star-rating", {
+                        staticClass: "fa-lg",
+                        attrs: { rating: review.rating }
+                      })
                     ],
                     1
                   )
