@@ -28,8 +28,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // });
 
 // Route::resource('bookables', 'Api\BookableController')->only(['index','show']);
-    Route::apiResource('bookables', 'Api\BookableController')->only(['index', 'show']);
-    Route::get('bookables/{bookable}/availability', 'Api\BookableAvailabilityController')
+Route::apiResource('bookables', 'Api\BookableController')->only(['index', 'show']);
+Route::get('bookables/{bookable}/availability', 'Api\BookableAvailabilityController')
     ->name('bookables.availbility.show');
-    Route::get('bookables/{bookable}/reviews', 'Api\BookableReviewController')
-        ->name('bookables.reviews.show');
+Route::get('bookables/{bookable}/reviews', 'Api\BookableReviewController')
+    ->name('bookables.reviews.show');
+
+Route::apiResource('reviews', 'Api\ReviewController')->only(['show']);
