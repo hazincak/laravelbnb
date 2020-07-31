@@ -36,7 +36,11 @@
                             <label for="content" class="text-muted">Describe your expirience with</label>
                             <textarea name="content" cols="30" rows="10" class="form-control" v-model="review.content"></textarea>
                         </div>
-                        <button class="btn btn-lg btn-primary btn-block">Submit</button>
+                        <button 
+                        class="btn btn-lg btn-primary btn-block" 
+                        @click.prevent="submit"
+                        :disabled="loading"
+                        >Submit</button>
                     </div>
                 </div>
             </div>
@@ -53,6 +57,7 @@ export default {
     data(){
         return{
             review:{
+                id: null,
                 rating:5,
                 content:null
             },
@@ -63,9 +68,10 @@ export default {
         };
     },
     created(){
+        this.review.id = this.$route.params.id;
         this.loading = true;
             //1. Check if review already exists (in reviews table by id) 
-            axios.get(`/api/reviews/${this.$route.params.id}`)
+            axios.get(`/api/reviews/${this.review.id}`)
             .then(response => {
                 this.existingReview = response.data.data
                 })
@@ -73,7 +79,7 @@ export default {
                 if(is404(err))
                 {
             //2. Fetch a booking by a review key
-                    return axios.get(`/api/booking-by-review/${this.$route.params.id}`)
+                    return axios.get(`/api/booking-by-review/${this.review.id}`)
                     .then(response => {
                         this.booking = response.data.data
                     })
@@ -105,6 +111,17 @@ export default {
         },
         twoColumns() {
             return this.loading || !this.alreadyReviewed;
+        }
+    },
+
+    methods: {
+        submit(){
+            this.loading = true;
+            axios
+            .post(`/api/reviews`, this.review)
+            .then(response.console.log(response))
+            .catch(err => (this.error = true))
+            .then(() => (this.loading = false));
         }
     }
 
