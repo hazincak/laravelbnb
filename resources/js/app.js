@@ -5,7 +5,9 @@ import VueRouter from "vue-router";
 import Index from "./Index";
 import moment from "moment";
 
+import FatalError from "./shared/components/FatalError";
 import StarRating from "./shared/components/StarRating";
+
 
 window.Vue = require('vue');
 
@@ -18,6 +20,7 @@ Vue.filter("fromNow", value => moment(value).fromNow());
 //GLOBAL REGISTRATION
 
 Vue.component("star-rating", StarRating);
+Vue.component("fatal-error", FatalError);
 
 // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
