@@ -10,6 +10,7 @@ import FatalError from "./shared/components/FatalError";
 import Success from "./shared/components/Success";
 import StarRating from "./shared/components/StarRating";
 import ValidationErrors from "./shared/components/ValidationErrors";
+import storeDefinition from "./store";
 
 
 window.Vue = require('vue');
@@ -28,14 +29,16 @@ Vue.component("fatal-error", FatalError);
 Vue.component("success", Success);
 Vue.component("v-errors", ValidationErrors);
 
+const store = new Vuex.Store(storeDefinition);
+
+
 // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-
 // Vue.component('example2-component', require('./components/Example.2.vue').default);
-
 //LOCAL REGISTRATION
 const app = new Vue({
     el: '#app',
     router, //short for `router: router`
+    store, //short for store: 'store'
     components:{
         "index": Index
     }
