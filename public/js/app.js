@@ -1982,7 +1982,11 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.loading = true;
-      this.errors = null; //If you relly on this.$route.params.id, your components are not reusable. Declare props 
+      this.errors = null;
+      this.$store.commit('setLastSearch', {
+        from: this.from,
+        to: this.to
+      }); //If you relly on this.$route.params.id, your components are not reusable. Declare props 
       //bookableId instead and  use it. 
 
       axios.get("/api/bookables/".concat(this.bookableId, "/availability?from=").concat(this.from, "&to=").concat(this.to)).then(function (response) {

@@ -59,6 +59,11 @@ export default {
         check(){
             this.loading = true;
             this.errors = null;
+
+            this.$store.commit('setLastSearch',{
+                from: this.from,
+                to: this.to
+            });
             
             //If you relly on this.$route.params.id, your components are not reusable. Declare props 
             //bookableId instead and  use it. 
