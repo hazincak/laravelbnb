@@ -1983,8 +1983,9 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.loading = true;
-      this.errors = null;
-      this.$store.commit('setLastSearch', {
+      this.errors = null; //Calling action
+
+      this.$store.dispatch('setLastSearch', {
         from: this.from,
         to: this.to
       }); //If you relly on this.$route.params.id, your components are not reusable. Declare props 
@@ -79202,6 +79203,12 @@ __webpack_require__.r(__webpack_exports__);
   mutations: {
     setLastSearch: function setLastSearch(state, payload) {
       state.lastSearch = payload;
+    }
+  },
+  actions: {
+    setLastSearch: function setLastSearch(context, payload) {
+      context.commit('setLastSearch', payload);
+      localStorage.setItem('lastSearch', JSON.stringify(payload));
     }
   }
 });
