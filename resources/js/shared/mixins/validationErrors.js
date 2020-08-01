@@ -1,5 +1,5 @@
 export default {
-    date(){
+    data(){
         return{
             errors: null
         }
