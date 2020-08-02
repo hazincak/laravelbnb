@@ -1965,6 +1965,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -61018,7 +61023,7 @@ var render = function() {
       { staticClass: "text-uppercase text-secondary font-weight-bolder" },
       [
         _vm._v("\n        Check availability\n        "),
-        _c("transition", { attrs: { name: "fade" } }, [
+        _c("transition", { attrs: { name: "fade " } }, [
           _vm.noAvailability
             ? _c("span", { staticClass: "text-danger" }, [
                 _vm._v("(NOT AVAILABLE)")
@@ -61130,7 +61135,18 @@ var render = function() {
         attrs: { disabled: _vm.loading },
         on: { click: _vm.check }
       },
-      [_vm._v("Check!")]
+      [
+        !_vm.loading
+          ? _c("span", [_vm._v("\n            Check!\n        ")])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.loading
+          ? _c("span", [
+              _c("i", { staticClass: "fas fa-circle-notch fa-spin" }),
+              _vm._v("Checking...")
+            ])
+          : _vm._e()
+      ]
     )
   ])
 }
