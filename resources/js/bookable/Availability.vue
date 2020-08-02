@@ -2,7 +2,7 @@
     <div>
         <h6 class="text-uppercase text-secondary font-weight-bolder">
             Check availability
-            <transition name="fade ">
+            <transition name="fade">
                 <span v-if="noAvailability" class="text-danger">(NOT AVAILABLE)</span>
                 <span v-if="hasAvailability" class="text-success">(AVAILABLE)</span>
             </transition>
@@ -65,27 +65,44 @@ export default {
         };
     },
     methods:{
-        check(){
+        async check(){
             this.loading = true;
             this.errors = null;
+            
 
             //Calling action
             this.$store.dispatch('setLastSearch',{
                 from: this.from,
                 to: this.to
             });
+
+            //If you relly on this.$route.params.id, your components are not reusable. Declare props 
+            //bookableId instead and  use it. 
+            try {
+                this.status = (await axios.get(
+                    `/api/bookables/${this.bookableId}/availability?from=${this.from}&to=${this.to}`
+                    )).status;
+                this.$emit("availability", this.hasAvailability);
+            } catch (err) {
+                if(is422(err)){
+                    this.errors = err.response.data.errors;
+                }
+                    this.status = err.response.status;
+                    this.$emit("availability", this.hasAvailability);
+            }
+            this.loading = false;
             
             //If you relly on this.$route.params.id, your components are not reusable. Declare props 
             //bookableId instead and  use it. 
-            axios.get(`/api/bookables/${this.bookableId}/availability?from=${this.from}&to=${this.to}`
-            ).then(response => {
-                this.status = response.status;
-            }).catch(error => {
-                if(is422(error)){
-                    this.errors = error.response.data.errors;
-                }
-                this.status = error.response.status;
-            }).then(() => (this.loading = false));
+            // axios.get(`/api/bookables/${this.bookableId}/availability?from=${this.from}&to=${this.to}`
+            // ).then(response => {
+            //     this.status = response.status;
+            // }).catch(error => {
+            //     if(is422(error)){
+            //         this.errors = error.response.data.errors;
+            //     }
+            //     this.status = error.response.status;
+            // }).then(() => (this.loading = false));
         },
     },
     computed:{
