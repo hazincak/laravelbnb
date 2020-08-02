@@ -32,7 +32,9 @@ Route::apiResource('bookables', 'Api\BookableController')->only(['index', 'show'
 Route::get('bookables/{bookable}/availability', 'Api\BookableAvailabilityController')
     ->name('bookables.availbility.show');
 Route::get('bookables/{bookable}/reviews', 'Api\BookableReviewController')
-    ->name('bookables.reviews.show');
+    ->name('bookables.reviews.index');
+Route::get('bookables/{bookable}/price', 'Api\BookablePriceController')
+    ->name('bookables.price.show');
 
 Route::get('booking-by-review/{reviewKey}', 'Api\BookingByReviewController')
     ->name('booking.by-review.show');
