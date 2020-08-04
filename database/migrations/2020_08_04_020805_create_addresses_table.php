@@ -22,7 +22,7 @@ class CreateAddressesTable extends Migration
             $table->string('email');
             $table->string('street');
             $table->string('city');
-            $table->string('country');
+            $table->string('county');
             $table->string('state');
             $table->string('zip', 30);
         });

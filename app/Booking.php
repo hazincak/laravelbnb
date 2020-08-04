@@ -16,7 +16,12 @@ class Booking extends Model
 
     public function review()
     {
-        $this->hasOne(Review::class);
+        return $this->hasOne(Review::class);
+    }
+
+    public function address()
+    {
+        return $this->belongsTo(Address::class);
     }
 
     //local query scope
