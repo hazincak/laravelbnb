@@ -2388,15 +2388,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }, _callee, null, [[3, 9]]);
       }))();
     },
+    //commit is for commiting mutations and dispatch is for actions
     addToBasket: function addToBasket() {
-      this.$store.commit("addToBasket", {
+      this.$store.dispatch("addToBasket", {
         bookable: this.bookable,
         price: this.price,
         dates: this.lastSearch
       });
     },
     removeFromBasket: function removeFromBasket() {
-      this.$store.commit("removeFromBasket", this.bookable.id);
+      this.$store.dispatch("removeFromBasket", this.bookable.id);
     }
   }
 });
@@ -79773,6 +79774,9 @@ __webpack_require__.r(__webpack_exports__);
       state.basket.items = state.basket.items.filter(function (item) {
         return item.bookable.id != payload;
       });
+    },
+    setBasket: function setBasket(state, payload) {
+      state.basket = payload;
     }
   },
   actions: {
@@ -79786,6 +79790,25 @@ __webpack_require__.r(__webpack_exports__);
       if (lastSearch) {
         context.commit('setLastSearch', JSON.parse(lastSearch));
       }
+
+      var basket = localStorage.getItem('basket');
+
+      if (basket) {
+        context.commit('setBasket', JSON.parse(basket));
+      }
+    },
+    addToBasket: function addToBasket(_ref, payload) {
+      var commit = _ref.commit,
+          state = _ref.state;
+      //context.state, context.commit
+      commit('addToBasket', payload);
+      localStorage.setItem('basket', JSON.stringify(state.basket));
+    },
+    removeFromBasket: function removeFromBasket(_ref2, payload) {
+      var commit = _ref2.commit,
+          state = _ref2.state;
+      commit('removeFromBasket', payload);
+      localStorage.setItem('basket', JSON.stringify(state.basket));
     }
   },
   getters: {
