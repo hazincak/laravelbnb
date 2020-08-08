@@ -5,10 +5,10 @@ export default{
             to: null
         },
         basket:{
-            items: [
-
-            ]
-        }
+            items: []
+        },
+        isLoggedIn: false,
+        user: {}
     },
     mutations: {
         setLastSearch(state, payload){

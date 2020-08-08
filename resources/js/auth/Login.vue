@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import validationErrors from '../shared/mixins/validationErrors';
+import validationErrors from './../shared/mixins/validationErrors';
 export default {
     mixins: [validationErrors],
 
@@ -70,6 +70,7 @@ export default {
                 await axios.post("/login", {
                     email: this.email,
                     password: this.password
+                    
                 });
                 await axios.get('/user');
             } catch (error) {
