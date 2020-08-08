@@ -3,6 +3,7 @@ import Basket from "./basket/Basket";
 import Bookables from "./bookables/Bookables";
 import Bookable from "./bookable/bookable";
 import Review from "./review/Review";
+import Login from "./auth/Login";
 
 
 
@@ -27,6 +28,11 @@ const routes = [
         path: "/basket",
         component: Basket,
         name: "basket"
+    },
+    {
+        path: "/auth/login",
+        component: Login,
+        name: "login"
     }
 
 
